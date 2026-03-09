@@ -72,25 +72,30 @@ export default function Home() {
 
       <Text style={styles.sectionTitle}>Frequently Asked Questions</Text>
 
-      <FAQItem
-        question="How much does solar cost?"
-        answer="A typical 3kW solar system costs around ₹1.5L to ₹2L before subsidy."
-      />
+<FAQItem
+question="How much does a solar system cost?"
+answer="A typical 3kW rooftop solar system costs around ₹1.5L to ₹2L before subsidy."
+/>
 
-      <FAQItem
-        question="How much subsidy is available?"
-        answer="The government provides up to ₹78,000 subsidy under PM Surya Ghar scheme."
-      />
+<FAQItem
+question="How much subsidy can I get?"
+answer="Under PM Surya Ghar Yojana, homeowners can receive subsidy up to ₹78,000."
+/>
 
-      <FAQItem
-        question="How long do solar panels last?"
-        answer="Solar panels usually last 25 years with very little maintenance."
-      />
+<FAQItem
+question="How long do solar panels last?"
+answer="Most solar panels last 25–30 years with minimal maintenance."
+/>
 
-      <FAQItem
-        question="Will solar work during cloudy weather?"
-        answer="Yes, solar panels still produce electricity even during cloudy days."
-      />
+<FAQItem
+question="Do solar panels work during cloudy weather?"
+answer="Yes. Solar panels still generate electricity on cloudy days but at slightly lower efficiency."
+/>
+
+<FAQItem
+question="How much electricity can a 3kW system produce?"
+answer="A 3kW system can generate around 12–15 units per day depending on sunlight conditions."
+/>
 
     </ScrollView>
   );

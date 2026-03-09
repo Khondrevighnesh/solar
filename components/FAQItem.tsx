@@ -1,44 +1,73 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useState } from "react";
 
-export default function FAQItem({question,answer}:any){
+export default function FAQItem({ question, answer }: any) {
 
-const [open,setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
-return(
+  return (
+    <View style={styles.container}>
 
-<View style={styles.box}>
+      <TouchableOpacity
+        style={styles.header}
+        onPress={() => setOpen(!open)}
+      >
+        <Text style={styles.question}>{question}</Text>
 
-<TouchableOpacity onPress={()=>setOpen(!open)}>
-<Text style={styles.question}>{question}</Text>
-</TouchableOpacity>
+        <Text style={styles.icon}>
+          {open ? "▲" : "▼"}
+        </Text>
+      </TouchableOpacity>
 
-{open && (
-<Text style={styles.answer}>{answer}</Text>
-)}
+      {open && (
+        <View style={styles.answerBox}>
+          <Text style={styles.answer}>{answer}</Text>
+        </View>
+      )}
 
-</View>
-
-);
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
 
-box:{
-backgroundColor:"#f9fafb",
-padding:15,
-borderRadius:12,
-marginBottom:10
-},
+  container: {
+    backgroundColor: "#ffffff",
+    borderRadius: 14,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: "#eeeeee",
+    overflow: "hidden"
+  },
 
-question:{
-fontWeight:"bold",
-fontSize:16
-},
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 16
+  },
 
-answer:{
-marginTop:8,
-color:"#555"
-}
+  question: {
+    fontSize: 16,
+    fontWeight: "600",
+    flex: 1
+  },
+
+  icon: {
+    fontSize: 16,
+    color: "#16a34a"
+  },
+
+  answerBox: {
+    borderTopWidth: 1,
+    borderColor: "#f0f0f0",
+    padding: 16,
+    backgroundColor: "#fafafa"
+  },
+
+  answer: {
+    color: "#555",
+    lineHeight: 22
+  }
 
 });
