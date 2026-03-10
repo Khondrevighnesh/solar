@@ -129,11 +129,7 @@ export default function Home() {
 
         <View style={styles.impactGrid}>
 
-          <View style={styles.impactCard}>
-            <Text style={styles.impactIcon}>🏠</Text>
-            <Text style={styles.impactNumber}>10,000+</Text>
-            <Text style={styles.impactLabel}>Homes Powered</Text>
-          </View>
+          
 
           <View style={styles.impactCard}>
             <Text style={styles.impactIcon}>⚡</Text>
@@ -159,12 +155,7 @@ export default function Home() {
             <Text style={styles.impactLabel}>Units Generated</Text>
           </View>
 
-          <View style={styles.impactCard}>
-            <Text style={styles.impactIcon}>🔧</Text>
-            <Text style={styles.impactNumber}>15,000+</Text>
-            <Text style={styles.impactLabel}>Installations Done</Text>
-          </View>
-
+         
         </View>
 
 
