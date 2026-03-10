@@ -1,9 +1,11 @@
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import ProfileOption from "../../components/ProfileOption";
+import Screen from "@/components/Screen";
 
 export default function Profile() {
 
   return (
+    <Screen>
     <ScrollView style={styles.container}>
 
       {/* USER INFO */}
@@ -40,6 +42,7 @@ export default function Profile() {
       </View>
 
     </ScrollView>
+    </Screen>
   );
 }
 

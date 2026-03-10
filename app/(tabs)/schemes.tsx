@@ -2,10 +2,13 @@ import { View, Text, ScrollView, StyleSheet } from "react-native";
 import SchemeCard from "../../components/SchemeCard";
 import SubsidyCard from "../../components/SubsidyCard";
 import schemes from "../../data/schemes";
+import Screen from "../../components/Screen";
+
 
 export default function Schemes() {
 
   return (
+    <Screen>
     <ScrollView style={styles.container}>
 
       {/* HERO SECTION */}
@@ -54,6 +57,7 @@ export default function Schemes() {
       </View>
 
     </ScrollView>
+    </Screen>
   );
 }
 

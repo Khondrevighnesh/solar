@@ -1,4 +1,8 @@
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+// import { SafeAreaView } from "react-native-safe-area-context";
+import Screen from "../../components/Screen";
+
+
 import { useRouter } from "expo-router";
 import InstallationForm from "../../components/InstallationForm";
 import FAQItem from "../../components/FAQItem";
@@ -8,6 +12,7 @@ export default function Home() {
   const router = useRouter();
 
   return (
+   <Screen>
     <ScrollView style={styles.container}>
 
       {/* HERO */}
@@ -98,10 +103,16 @@ answer="A 3kW system can generate around 12–15 units per day depending on sunl
 />
 
     </ScrollView>
+    </Screen>
+ 
   );
 }
 
 const styles = StyleSheet.create({
+
+  safeArea:{
+    flex:1
+  },
 
   container:{
     flex:1,

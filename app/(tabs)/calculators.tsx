@@ -1,5 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { router } from "expo-router";
+import Screen from "../../components/Screen";
+
 
 export default function Calculators() {
 
@@ -12,6 +14,7 @@ export default function Calculators() {
   ];
 
   return (
+    <Screen>
     <View style={styles.container}>
 
       <Text style={styles.title}>Solar Calculators</Text>
@@ -27,6 +30,7 @@ export default function Calculators() {
       ))}
 
     </View>
+    </Screen>
   );
 }
 

@@ -3,15 +3,28 @@ import { Ionicons } from "@expo/vector-icons";
 
 export default function TabLayout() {
   return (
-    <Tabs screenOptions={{ headerShown: false }}>
-
+    <Tabs
+      screenOptions={{
+    headerShown: false,
+    tabBarActiveTintColor: "#16a34a",
+    tabBarInactiveTintColor: "#666",
+    tabBarStyle: {
+      backgroundColor: "#ffffff",
+      borderTopWidth: 0,
+      elevation: 0,
+      height: 65,
+      paddingBottom: 8,
+      paddingTop: 6
+    }
+  }}
+    >
       <Tabs.Screen
         name="index"
         options={{
           title: "Home",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="home" size={size} color={color} />
-          ),
+          )
         }}
       />
 
@@ -21,7 +34,7 @@ export default function TabLayout() {
           title: "Calculators",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="calculator" size={size} color={color} />
-          ),
+          )
         }}
       />
 
@@ -31,7 +44,7 @@ export default function TabLayout() {
           title: "Schemes",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="leaf" size={size} color={color} />
-          ),
+          )
         }}
       />
 
@@ -41,7 +54,7 @@ export default function TabLayout() {
           title: "Knowledge",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="book" size={size} color={color} />
-          ),
+          )
         }}
       />
 
@@ -51,7 +64,7 @@ export default function TabLayout() {
           title: "Map",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="map" size={size} color={color} />
-          ),
+          )
         }}
       />
 
@@ -61,7 +74,7 @@ export default function TabLayout() {
           title: "Profile",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person" size={size} color={color} />
-          ),
+          )
         }}
       />
 

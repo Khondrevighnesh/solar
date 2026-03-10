@@ -1,9 +1,12 @@
 import { View, Text, ScrollView, StyleSheet } from "react-native";
 import KnowledgeCard from "../../components/KnowledgeCard";
 import knowledgeData from "../../data/knowledge";
+import Screen from "../../components/Screen";
+
 
 export default function Knowledge() {
   return (
+    <Screen>
     <ScrollView style={styles.container}>
 
       <Text style={styles.title}>Solar Knowledge</Text>
@@ -16,6 +19,7 @@ export default function Knowledge() {
       ))}
 
     </ScrollView>
+    </Screen>
   );
 }
 
