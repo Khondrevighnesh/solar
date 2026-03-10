@@ -1,47 +1,71 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
+import { router } from "expo-router";
 import ProfileOption from "../../components/ProfileOption";
-import Screen from "@/components/Screen";
+import Screen from "../../components/Screen";
 
 export default function Profile() {
 
   return (
     <Screen>
-    <ScrollView style={styles.container}>
 
-      {/* USER INFO */}
+      <View style={styles.container}>
 
-      <View style={styles.profileBox}>
-        <View style={styles.avatar}>
-          <Text style={styles.avatarText}>U</Text>
+        {/* USER INFO */}
+
+        <View style={styles.profileBox}>
+          <View style={styles.avatar}>
+            <Text style={styles.avatarText}>U</Text>
+          </View>
+
+          <Text style={styles.name}>User Name</Text>
+          <Text style={styles.email}>user@email.com</Text>
         </View>
 
-        <Text style={styles.name}>User Name</Text>
-        <Text style={styles.email}>user@email.com</Text>
+
+        {/* OPTIONS */}
+
+        <View style={styles.section}>
+
+          <ProfileOption
+            title="My Solar Calculations"
+            icon="📊"
+            onPress={() => router.push("/calculators")}
+          />
+
+          <ProfileOption
+            title="Saved Schemes"
+            icon="🏛"
+            onPress={() => router.push("/schemes")}
+          />
+
+          <ProfileOption
+            title="Installation Requests"
+            icon="🔧"
+            onPress={() => router.push("/installation")}
+          />
+
+          <ProfileOption
+            title="My Subsidy Applications"
+            icon="💰"
+          />
+
+        </View>
+
+
+        <View style={styles.section}>
+
+          <ProfileOption title="Notifications" icon="🔔" />
+
+          <ProfileOption title="Help & Support" icon="❓" />
+
+          <ProfileOption title="About App" icon="ℹ️" />
+
+          <ProfileOption title="Logout" icon="🚪" />
+
+        </View>
+
       </View>
 
-
-      {/* OPTIONS */}
-
-      <View style={styles.section}>
-
-        <ProfileOption title="My Solar Calculations" icon="📊" />
-        <ProfileOption title="Saved Schemes" icon="🏛" />
-        <ProfileOption title="Installation Requests" icon="🔧" />
-        <ProfileOption title="My Subsidy Applications" icon="💰" />
-
-      </View>
-
-
-      <View style={styles.section}>
-
-        <ProfileOption title="Notifications" icon="🔔" />
-        <ProfileOption title="Help & Support" icon="❓" />
-        <ProfileOption title="About App" icon="ℹ️" />
-        <ProfileOption title="Logout" icon="🚪" />
-
-      </View>
-
-    </ScrollView>
     </Screen>
   );
 }
@@ -49,9 +73,7 @@ export default function Profile() {
 const styles = StyleSheet.create({
 
   container:{
-    flex:1,
-    backgroundColor:"#ffffff",
-    padding:20
+    flex:1
   },
 
   profileBox:{

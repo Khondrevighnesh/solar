@@ -1,62 +1,64 @@
-import { View, Text, ScrollView, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import SchemeCard from "../../components/SchemeCard";
 import SubsidyCard from "../../components/SubsidyCard";
 import schemes from "../../data/schemes";
 import Screen from "../../components/Screen";
 
-
 export default function Schemes() {
 
   return (
     <Screen>
-    <ScrollView style={styles.container}>
 
-      {/* HERO SECTION */}
+      <View style={styles.container}>
 
-      <View style={styles.hero}>
-        <Text style={styles.heroTitle}>Solar Government Schemes</Text>
-        <Text style={styles.heroSubtitle}>
-          Save money with government solar subsidies and install rooftop solar easily.
-        </Text>
+        {/* HERO SECTION */}
+
+        <View style={styles.hero}>
+          <Text style={styles.heroTitle}>Solar Government Schemes</Text>
+
+          <Text style={styles.heroSubtitle}>
+            Save money with government solar subsidies and install rooftop solar easily.
+          </Text>
+        </View>
+
+
+        {/* SUBSIDY HIGHLIGHTS */}
+
+        <Text style={styles.sectionTitle}>Subsidy Highlights</Text>
+
+        <View style={styles.row}>
+          <SubsidyCard power="1 kW" amount="₹30,000" />
+          <SubsidyCard power="2 kW" amount="₹60,000" />
+        </View>
+
+        <View style={styles.row}>
+          <SubsidyCard power="3 kW" amount="₹78,000" />
+          <SubsidyCard power="Above 3kW" amount="₹78,000 Max" />
+        </View>
+
+
+        {/* SCHEMES LIST */}
+
+        <Text style={styles.sectionTitle}>Available Schemes</Text>
+
+        {schemes.map((item) => (
+          <SchemeCard key={item.id} scheme={item} />
+        ))}
+
+
+        {/* ELIGIBILITY */}
+
+        <Text style={styles.sectionTitle}>Eligibility</Text>
+
+        <View style={styles.eligibilityBox}>
+          <Text style={styles.eligibilityText}>• Must be Indian resident</Text>
+          <Text style={styles.eligibilityText}>• Residential electricity connection</Text>
+          <Text style={styles.eligibilityText}>• Rooftop space available</Text>
+          <Text style={styles.eligibilityText}>• Apply via MNRE portal</Text>
+        </View>
+
       </View>
 
-
-      {/* SUBSIDY HIGHLIGHTS */}
-
-      <Text style={styles.sectionTitle}>Subsidy Highlights</Text>
-
-      <View style={styles.row}>
-        <SubsidyCard power="1 kW" amount="₹30,000" />
-        <SubsidyCard power="2 kW" amount="₹60,000" />
-      </View>
-
-      <View style={styles.row}>
-        <SubsidyCard power="3 kW" amount="₹78,000" />
-        <SubsidyCard power="Above 3kW" amount="₹78,000 Max" />
-      </View>
-
-
-      {/* SCHEMES LIST */}
-
-      <Text style={styles.sectionTitle}>Available Schemes</Text>
-
-      {schemes.map((item) => (
-        <SchemeCard key={item.id} scheme={item} />
-      ))}
-
-
-      {/* ELIGIBILITY */}
-
-      <Text style={styles.sectionTitle}>Eligibility</Text>
-
-      <View style={styles.eligibilityBox}>
-        <Text style={styles.eligibilityText}>• Must be Indian resident</Text>
-        <Text style={styles.eligibilityText}>• Residential electricity connection</Text>
-        <Text style={styles.eligibilityText}>• Rooftop space available</Text>
-        <Text style={styles.eligibilityText}>• Apply via MNRE portal</Text>
-      </View>
-
-    </ScrollView>
     </Screen>
   );
 }
@@ -64,9 +66,7 @@ export default function Schemes() {
 const styles = StyleSheet.create({
 
   container:{
-    flex:1,
-    padding:20,
-    backgroundColor:"#fff"
+    flex:1
   },
 
   hero:{

@@ -1,8 +1,5 @@
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
-// import { SafeAreaView } from "react-native-safe-area-context";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Screen from "../../components/Screen";
-
-
 import { useRouter } from "expo-router";
 import InstallationForm from "../../components/InstallationForm";
 import FAQItem from "../../components/FAQItem";
@@ -12,8 +9,7 @@ export default function Home() {
   const router = useRouter();
 
   return (
-   <Screen>
-    <ScrollView style={styles.container}>
+    <Screen>
 
       {/* HERO */}
 
@@ -25,7 +21,7 @@ export default function Home() {
       </View>
 
 
-      {/* CALCULATOR TOOLS */}
+      {/* CALCULATORS */}
 
       <Text style={styles.sectionTitle}>Solar Calculators</Text>
 
@@ -77,48 +73,36 @@ export default function Home() {
 
       <Text style={styles.sectionTitle}>Frequently Asked Questions</Text>
 
-<FAQItem
-question="How much does a solar system cost?"
-answer="A typical 3kW rooftop solar system costs around ₹1.5L to ₹2L before subsidy."
-/>
+      <FAQItem
+        question="How much does a solar system cost?"
+        answer="A typical 3kW rooftop solar system costs around ₹1.5L to ₹2L before subsidy."
+      />
 
-<FAQItem
-question="How much subsidy can I get?"
-answer="Under PM Surya Ghar Yojana, homeowners can receive subsidy up to ₹78,000."
-/>
+      <FAQItem
+        question="How much subsidy can I get?"
+        answer="Under PM Surya Ghar Yojana, homeowners can receive subsidy up to ₹78,000."
+      />
 
-<FAQItem
-question="How long do solar panels last?"
-answer="Most solar panels last 25–30 years with minimal maintenance."
-/>
+      <FAQItem
+        question="How long do solar panels last?"
+        answer="Most solar panels last 25–30 years with minimal maintenance."
+      />
 
-<FAQItem
-question="Do solar panels work during cloudy weather?"
-answer="Yes. Solar panels still generate electricity on cloudy days but at slightly lower efficiency."
-/>
+      <FAQItem
+        question="Do solar panels work during cloudy weather?"
+        answer="Yes. Solar panels still generate electricity on cloudy days but at slightly lower efficiency."
+      />
 
-<FAQItem
-question="How much electricity can a 3kW system produce?"
-answer="A 3kW system can generate around 12–15 units per day depending on sunlight conditions."
-/>
+      <FAQItem
+        question="How much electricity can a 3kW system produce?"
+        answer="A 3kW system can generate around 12–15 units per day depending on sunlight conditions."
+      />
 
-    </ScrollView>
     </Screen>
- 
   );
 }
 
 const styles = StyleSheet.create({
-
-  safeArea:{
-    flex:1
-  },
-
-  container:{
-    flex:1,
-    backgroundColor:"#fff",
-    padding:20
-  },
 
   hero:{
     backgroundColor:"#16a34a",
