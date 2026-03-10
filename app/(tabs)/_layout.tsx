@@ -5,25 +5,39 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-    headerShown: false,
-    tabBarActiveTintColor: "#16a34a",
-    tabBarInactiveTintColor: "#666",
-    tabBarStyle: {
-      backgroundColor: "#ffffff",
-      borderTopWidth: 0,
-      elevation: 0,
-      height: 65,
-      paddingBottom: 8,
-      paddingTop: 6
-    }
-  }}
+        headerShown: false,
+
+        tabBarActiveTintColor: "#16a34a",
+        tabBarInactiveTintColor: "#666",
+
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: "600",
+          marginBottom: 4
+        },
+
+        tabBarIconStyle: {
+          marginTop: 4
+        },
+
+        tabBarStyle: {
+          backgroundColor: "#ffffff",
+          borderTopWidth: 0,
+          elevation: 10,
+
+          height: 85,          // bigger tab bar
+          paddingBottom: 10,
+          paddingTop: 8
+        }
+      }}
     >
+
       <Tabs.Screen
         name="index"
         options={{
           title: "Home",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home" size={size} color={color} />
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="home" size={26} color={color} />
           )
         }}
       />
@@ -32,8 +46,8 @@ export default function TabLayout() {
         name="calculators"
         options={{
           title: "Calculators",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="calculator" size={size} color={color} />
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="calculator" size={26} color={color} />
           )
         }}
       />
@@ -42,8 +56,8 @@ export default function TabLayout() {
         name="schemes"
         options={{
           title: "Schemes",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="leaf" size={size} color={color} />
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="leaf" size={26} color={color} />
           )
         }}
       />
@@ -52,8 +66,8 @@ export default function TabLayout() {
         name="knowledge"
         options={{
           title: "Knowledge",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="book" size={size} color={color} />
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="book" size={26} color={color} />
           )
         }}
       />
@@ -62,8 +76,8 @@ export default function TabLayout() {
         name="map"
         options={{
           title: "Map",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="map" size={size} color={color} />
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="map" size={26} color={color} />
           )
         }}
       />
@@ -72,8 +86,8 @@ export default function TabLayout() {
         name="profile"
         options={{
           title: "Profile",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="person" size={size} color={color} />
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="person" size={26} color={color} />
           )
         }}
       />

@@ -1,4 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import { useEffect, useState } from "react";
+import * as Location from "expo-location";
 import Screen from "../../components/Screen";
 import { useRouter } from "expo-router";
 import InstallationForm from "../../components/InstallationForm";
@@ -8,9 +10,76 @@ export default function Home() {
 
   const router = useRouter();
 
+  const [location, setLocation] = useState("Fetching location...");
+  const userName = "Vighnesh";
+
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+
+    if (hour < 12) return "Good Morning ☀️";
+    if (hour < 18) return "Good Afternoon 🌤";
+    return "Good Evening 🌙";
+  };
+
+  const today = new Date().toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric"
+  });
+
+  useEffect(() => {
+
+    const getLocation = async () => {
+
+      let { status } = await Location.requestForegroundPermissionsAsync();
+
+      if (status !== "granted") {
+        setLocation("Location unavailable");
+        return;
+      }
+
+      let loc = await Location.getCurrentPositionAsync({});
+
+      const address = await Location.reverseGeocodeAsync(loc.coords);
+
+      if (address.length > 0) {
+        const city = address[0].city;
+        const region = address[0].region;
+
+        setLocation(`${city}, ${region}`);
+      }
+
+    };
+
+    getLocation();
+
+  }, []);
+
   return (
     <Screen>
+
       <ScrollView showsVerticalScrollIndicator={false}>
+
+        {/* MODERN HEADER */}
+
+        <View style={styles.headerCard}>
+
+          <Text style={styles.greeting}>
+            {getGreeting()}
+          </Text>
+
+          <Text style={styles.userName}>
+            {userName}
+          </Text>
+
+          <View style={styles.metaRow}>
+            <Text style={styles.metaText}>📍 {location}</Text>
+            <Text style={styles.metaDot}>•</Text>
+            <Text style={styles.metaText}>{today}</Text>
+          </View>
+
+        </View>
+
 
         {/* HERO */}
 
@@ -27,7 +96,6 @@ export default function Home() {
           >
             <Text style={styles.heroButtonText}>Check Solar Savings</Text>
           </TouchableOpacity>
-
         </View>
 
 
@@ -88,118 +156,11 @@ export default function Home() {
         </View>
 
 
-        {/* SAVINGS */}
-
-        <Text style={styles.sectionTitle}>Example Solar Savings</Text>
-
-        <View style={styles.savingsCard}>
-          <Text style={styles.savingsText}>Before Solar: ₹4000/month</Text>
-          <Text style={styles.savingsText}>After Solar: ₹500/month</Text>
-
-          <Text style={styles.savingsHighlight}>
-            Save ₹3500/month
-          </Text>
-
-          <Text style={styles.savingsSub}>
-            ₹10,50,000 savings in 25 years
-          </Text>
-        </View>
-
-
-        {/* INSTALLATION PROCESS */}
-
-        <Text style={styles.sectionTitle}>How Solar Installation Works</Text>
-
-        <View style={styles.processBox}>
-          <Text style={styles.processText}>1️⃣ Free Site Survey</Text>
-          <Text style={styles.processText}>2️⃣ Custom Solar Design</Text>
-          <Text style={styles.processText}>3️⃣ Professional Installation</Text>
-          <Text style={styles.processText}>4️⃣ Net Meter Approval</Text>
-          <Text style={styles.processText}>5️⃣ Start Generating Power</Text>
-        </View>
-
-
-        {/* MODERN SOLAR IMPACT */}
-
-        <Text style={styles.sectionTitle}>Our Solar Impact</Text>
-
-        <Text style={styles.sectionSubtitle}>
-          Powering homes across India with clean solar energy
-        </Text>
-
-        <View style={styles.impactGrid}>
-
-          
-
-          <View style={styles.impactCard}>
-            <Text style={styles.impactIcon}>⚡</Text>
-            <Text style={styles.impactNumber}>75 MW</Text>
-            <Text style={styles.impactLabel}>Solar Installed</Text>
-          </View>
-
-          <View style={styles.impactCard}>
-            <Text style={styles.impactIcon}>💰</Text>
-            <Text style={styles.impactNumber}>₹8 Cr+</Text>
-            <Text style={styles.impactLabel}>Electricity Saved</Text>
-          </View>
-
-          <View style={styles.impactCard}>
-            <Text style={styles.impactIcon}>🌱</Text>
-            <Text style={styles.impactNumber}>12,000</Text>
-            <Text style={styles.impactLabel}>Tons CO₂ Reduced</Text>
-          </View>
-
-          <View style={styles.impactCard}>
-            <Text style={styles.impactIcon}>☀️</Text>
-            <Text style={styles.impactNumber}>120M</Text>
-            <Text style={styles.impactLabel}>Units Generated</Text>
-          </View>
-
-         
-        </View>
-
-
         {/* INSTALLATION FORM */}
 
         <Text style={styles.sectionTitle}>Request Home Installation</Text>
 
         <InstallationForm />
-
-
-        {/* TESTIMONIALS */}
-
-        <Text style={styles.sectionTitle}>What Our Customers Say</Text>
-
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{marginBottom:25}}>
-
-          <View style={styles.testimonialCard}>
-            <Text style={styles.stars}>⭐⭐⭐⭐⭐</Text>
-            <Text style={styles.reviewText}>
-              My electricity bill dropped from ₹4500 to ₹600 after installing solar.
-            </Text>
-            <Text style={styles.reviewUser}>Rajesh Patil</Text>
-            <Text style={styles.reviewCity}>Pune</Text>
-          </View>
-
-          <View style={styles.testimonialCard}>
-            <Text style={styles.stars}>⭐⭐⭐⭐⭐</Text>
-            <Text style={styles.reviewText}>
-              The installation process was smooth and professional.
-            </Text>
-            <Text style={styles.reviewUser}>Amit Sharma</Text>
-            <Text style={styles.reviewCity}>Mumbai</Text>
-          </View>
-
-          <View style={styles.testimonialCard}>
-            <Text style={styles.stars}>⭐⭐⭐⭐⭐</Text>
-            <Text style={styles.reviewText}>
-              Best investment for my house. Solar paid back in 4 years.
-            </Text>
-            <Text style={styles.reviewUser}>Sneha Kulkarni</Text>
-            <Text style={styles.reviewCity}>Pune</Text>
-          </View>
-
-        </ScrollView>
 
 
         {/* FAQ */}
@@ -217,11 +178,51 @@ export default function Home() {
         />
 
       </ScrollView>
+
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
+
+headerCard:{
+backgroundColor:"#f9fafb",
+padding:20,
+borderRadius:18,
+marginBottom:20,
+shadowColor:"#e0b4b412",
+shadowOpacity:0.06,
+shadowRadius:10,
+elevation:4
+},
+
+greeting:{
+fontSize:18,
+color:"#16a34a",
+fontWeight:"600"
+},
+
+userName:{
+fontSize:26,
+fontWeight:"bold",
+marginTop:4
+},
+
+metaRow:{
+flexDirection:"row",
+alignItems:"center",
+marginTop:6
+},
+
+metaText:{
+color:"#6b7280",
+fontSize:13
+},
+
+metaDot:{
+marginHorizontal:6,
+color:"#9ca3af"
+},
 
 hero:{
 backgroundColor:"#16a34a",
@@ -299,108 +300,6 @@ marginBottom:25
 
 infoText:{
 marginBottom:6
-},
-
-savingsCard:{
-backgroundColor:"#ecfdf5",
-padding:18,
-borderRadius:14,
-marginBottom:25
-},
-
-savingsText:{
-marginBottom:5
-},
-
-savingsHighlight:{
-fontSize:18,
-fontWeight:"bold",
-color:"#16a34a",
-marginTop:5
-},
-
-savingsSub:{
-color:"#666",
-marginTop:5
-},
-
-processBox:{
-backgroundColor:"#f9fafb",
-padding:15,
-borderRadius:12,
-marginBottom:25
-},
-
-processText:{
-marginBottom:6
-},
-
-impactGrid:{
-flexDirection:"row",
-flexWrap:"wrap",
-justifyContent:"space-between",
-marginBottom:25
-},
-
-impactCard:{
-width:"48%",
-backgroundColor:"#ffffff",
-padding:18,
-borderRadius:16,
-marginBottom:14,
-alignItems:"center",
-shadowColor:"#000",
-shadowOpacity:0.06,
-shadowRadius:6,
-elevation:3
-},
-
-impactIcon:{
-fontSize:22,
-marginBottom:6
-},
-
-impactNumber:{
-fontSize:20,
-fontWeight:"bold"
-},
-
-impactLabel:{
-fontSize:12,
-color:"#666",
-textAlign:"center"
-},
-
-testimonialCard:{
-width:260,
-backgroundColor:"#ffffff",
-padding:18,
-borderRadius:16,
-marginRight:15,
-shadowColor:"#000",
-shadowOpacity:0.08,
-shadowRadius:8,
-elevation:3
-},
-
-stars:{
-fontSize:16,
-marginBottom:6
-},
-
-reviewText:{
-fontSize:14,
-color:"#444",
-marginBottom:10
-},
-
-reviewUser:{
-fontWeight:"bold"
-},
-
-reviewCity:{
-fontSize:12,
-color:"#777"
 }
 
 });
