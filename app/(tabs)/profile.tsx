@@ -7,10 +7,7 @@ export default function Profile() {
 
   return (
     <Screen>
-
       <View style={styles.container}>
-
-        {/* USER INFO */}
 
         <View style={styles.profileBox}>
           <View style={styles.avatar}>
@@ -21,8 +18,15 @@ export default function Profile() {
           <Text style={styles.email}>user@email.com</Text>
         </View>
 
+        <View style={styles.section}>
 
-        {/* OPTIONS */}
+          <ProfileOption
+            title="Paid Client Dashboard"
+            icon="🔐"
+            onPress={() => router.push("/paid-login")}
+          />
+
+        </View>
 
         <View style={styles.section}>
 
@@ -41,31 +45,11 @@ export default function Profile() {
           <ProfileOption
             title="Installation Requests"
             icon="🔧"
-            onPress={() => router.push("/installation")}
           />
-
-          <ProfileOption
-            title="My Subsidy Applications"
-            icon="💰"
-          />
-
-        </View>
-
-
-        <View style={styles.section}>
-
-          <ProfileOption title="Notifications" icon="🔔" />
-
-          <ProfileOption title="Help & Support" icon="❓" />
-
-          <ProfileOption title="About App" icon="ℹ️" />
-
-          <ProfileOption title="Logout" icon="🚪" />
 
         </View>
 
       </View>
-
     </Screen>
   );
 }

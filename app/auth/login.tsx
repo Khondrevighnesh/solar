@@ -1,39 +1,102 @@
-import { View, TextInput, Button } from "react-native"
-import { useState } from "react"
-import { useAuth } from "../../hooks/useAuth"
-import { router } from "expo-router"
+import { useState } from "react";
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
+import { useRouter } from "expo-router";
 
-export default function Login(){
+export default function Login() {
 
-const { login } = useAuth()
+  const router = useRouter();
 
-const [email,setEmail] = useState("")
+  const [email,setEmail] = useState("");
+  const [password,setPassword] = useState("");
 
-const handleLogin = () => {
+  const handleLogin = () => {
 
-login(email,"password")
+    if(!email || !password){
+      alert("Enter email and password");
+      return;
+    }
 
-router.replace("/(tabs)")
+    // later connect backend
+   router.replace("/(tabs)");
+  };
 
+  return(
+
+    <View style={styles.container}>
+
+      <Text style={styles.title}>Welcome Back</Text>
+      <Text style={styles.subtitle}>Login to continue</Text>
+
+      <TextInput
+        placeholder="Email"
+        style={styles.input}
+        value={email}
+        onChangeText={setEmail}
+      />
+
+      <TextInput
+        placeholder="Password"
+        style={styles.input}
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
+      />
+
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={()=>router.push("/(auth)/register")}>
+        <Text style={styles.register}>Create Account</Text>
+      </TouchableOpacity>
+
+    </View>
+
+  );
 }
 
-return(
+const styles = StyleSheet.create({
 
-<View className="flex-1 justify-center p-6">
+container:{
+flex:1,
+justifyContent:"center",
+padding:25
+},
 
-<TextInput
-placeholder="Email"
-className="border p-3 mb-4"
-onChangeText={setEmail}
-/>
+title:{
+fontSize:28,
+fontWeight:"bold"
+},
 
-<Button
-title="Login"
-onPress={handleLogin}
-/>
+subtitle:{
+color:"#666",
+marginBottom:30
+},
 
-</View>
+input:{
+borderWidth:1,
+borderColor:"#ddd",
+padding:12,
+borderRadius:10,
+marginBottom:15
+},
 
-)
+button:{
+backgroundColor:"#16a34a",
+padding:15,
+borderRadius:10,
+alignItems:"center"
+},
 
+buttonText:{
+color:"#fff",
+fontWeight:"bold"
+},
+
+register:{
+marginTop:20,
+textAlign:"center",
+color:"#16a34a"
 }
+
+});

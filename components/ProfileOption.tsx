@@ -1,36 +1,52 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-export default function ProfileOption({ title, icon }: any) {
+export default function ProfileOption({ title, icon, onPress }) {
 
   return (
-    <TouchableOpacity style={styles.option}>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
 
-      <Text style={styles.icon}>{icon}</Text>
+      <View style={styles.left}>
+        <Text style={styles.icon}>{icon}</Text>
+        <Text style={styles.title}>{title}</Text>
+      </View>
 
-      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.arrow}>›</Text>
 
     </TouchableOpacity>
   );
+
 }
 
 const styles = StyleSheet.create({
 
-  option:{
-    flexDirection:"row",
-    alignItems:"center",
-    padding:15,
-    backgroundColor:"#f9fafb",
-    borderRadius:12,
-    marginBottom:10
-  },
+container:{
+flexDirection:"row",
+justifyContent:"space-between",
+alignItems:"center",
+padding:16,
+backgroundColor:"#fff",
+borderRadius:10,
+marginBottom:10,
+elevation:2
+},
 
-  icon:{
-    fontSize:22,
-    marginRight:12
-  },
+left:{
+flexDirection:"row",
+alignItems:"center"
+},
 
-  title:{
-    fontSize:16
-  }
+icon:{
+fontSize:18,
+marginRight:10
+},
+
+title:{
+fontSize:16
+},
+
+arrow:{
+fontSize:20,
+color:"#888"
+}
 
 });
