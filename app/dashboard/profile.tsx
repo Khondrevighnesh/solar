@@ -1,238 +1,287 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-import MapView, { Marker } from "react-native-maps";
+import {
+View,
+Text,
+StyleSheet,
+TouchableOpacity
+} from "react-native";
 
-export default function Profile() {
+import { Ionicons } from "@expo/vector-icons";
+import { useContext } from "react";
+import { router } from "expo-router";
+import Screen from "../../components/Screen";
+import { AuthContext } from "../../context/AuthContext";
+import { LinearGradient } from "expo-linear-gradient";
 
-return (
+export default function Profile(){
 
-<ScrollView style={styles.container}>
+const { logout } = useContext(AuthContext);
 
-<Text style={styles.title}>Profile</Text>
+const handleLogout = () => {
+logout();
+router.replace("/");
+};
 
-{/* User Profile Card */}
+return(
 
-<View style={styles.profileCard}>
+<Screen>
 
-<Ionicons name="person-circle" size={70} color="#16a34a" />
+{/* ⭐ Profile Header */}
+<LinearGradient
+colors={["#16a34a","#22c55e","#4ade80"]}
+style={styles.header}
+>
 
-<View style={{marginLeft:15}}>
-<Text style={styles.name}>Vighnesh Khondre</Text>
-<Text style={styles.role}>Solar Plant Owner</Text>
-<Text style={styles.info}>📧 vighnesh@email.com</Text>
-<Text style={styles.info}>📞 +91 9876543210</Text>
+<Ionicons name="person-circle" size={90} color="#fff"/>
+
+<Text style={styles.name}>Solar Client</Text>
+<Text style={styles.email}>client@solar.com</Text>
+
+<View style={styles.badge}>
+<Text style={styles.badgeText}>Plant Online</Text>
 </View>
 
-</View>
+</LinearGradient>
 
-{/* My Plants */}
-
-<Text style={styles.section}>My Plants</Text>
+{/* ⭐ Plant Info */}
+<View style={styles.section}>
+<Text style={styles.sectionTitle}>Plant Information</Text>
 
 <View style={styles.grid}>
 
-<View style={styles.plantCard}>
-<Ionicons name="flash" size={28} color="#16a34a"/>
-<Text style={styles.plantName}>Rooftop Solar</Text>
-<Text style={styles.plantMeta}>5 kW</Text>
-<Text style={styles.plantMeta}>Pune</Text>
+<View style={styles.box}>
+<Text style={styles.label}>Capacity</Text>
+<Text style={styles.value}>5 kW</Text>
 </View>
 
-<View style={styles.plantCard}>
-<Ionicons name="flash" size={28} color="#16a34a"/>
-<Text style={styles.plantName}>Factory Solar</Text>
-<Text style={styles.plantMeta}>25 kW</Text>
-<Text style={styles.plantMeta}>Mumbai</Text>
+<View style={styles.box}>
+<Text style={styles.label}>Location</Text>
+<Text style={styles.value}>Pune</Text>
 </View>
 
+<View style={styles.box}>
+<Text style={styles.label}>Installation</Text>
+<Text style={styles.value}>2023</Text>
 </View>
 
-{/* Plant Information */}
-
-<View style={styles.card}>
-
-<Text style={styles.cardTitle}>Plant Information</Text>
-
-<View style={styles.row}>
-<Ionicons name="business" size={18} color="#16a34a"/>
-<Text style={styles.rowText}>Plant Name: Rooftop Solar</Text>
-</View>
-
-<View style={styles.row}>
-<Ionicons name="flash" size={18} color="#16a34a"/>
-<Text style={styles.rowText}>Capacity: 5 kW</Text>
-</View>
-
-<View style={styles.row}>
-<Ionicons name="location" size={18} color="#16a34a"/>
-<Text style={styles.rowText}>Location: Pune, Maharashtra</Text>
-</View>
-
-<View style={styles.row}>
-<Ionicons name="calendar" size={18} color="#16a34a"/>
-<Text style={styles.rowText}>Installed: Jan 2025</Text>
+<View style={styles.box}>
+<Text style={styles.label}>Inverter</Text>
+<Text style={styles.value}>Growatt</Text>
 </View>
 
 </View>
 
-{/* System Details */}
-
-<View style={styles.card}>
-
-<Text style={styles.cardTitle}>System Details</Text>
-
-<View style={styles.row}>
-<MaterialCommunityIcons name="solar-panel" size={18} color="#16a34a"/>
-<Text style={styles.rowText}>Panels: 12 × 450W</Text>
 </View>
 
-<View style={styles.row}>
-<MaterialCommunityIcons name="flash" size={18} color="#16a34a"/>
-<Text style={styles.rowText}>Inverter: Growatt 5kW</Text>
+{/* ⭐ Performance */}
+<View style={styles.section}>
+<Text style={styles.sectionTitle}>Performance</Text>
+
+<View style={styles.kpiRow}>
+
+<View style={styles.kpiCard}>
+<Ionicons name="flash" size={24} color="#16a34a"/>
+<Text style={styles.kpiValue}>420</Text>
+<Text style={styles.kpiLabel}>kWh</Text>
 </View>
 
-<View style={styles.row}>
-<MaterialCommunityIcons name="transmission-tower" size={18} color="#16a34a"/>
-<Text style={styles.rowText}>Grid Type: Net Metering</Text>
+<View style={styles.kpiCard}>
+<Ionicons name="cash" size={24} color="#16a34a"/>
+<Text style={styles.kpiValue}>₹3200</Text>
+<Text style={styles.kpiLabel}>Savings</Text>
 </View>
 
-<View style={styles.row}>
-<MaterialCommunityIcons name="home-roof" size={18} color="#16a34a"/>
-<Text style={styles.rowText}>Mount Type: Rooftop</Text>
+<View style={styles.kpiCard}>
+<Ionicons name="speedometer" size={24} color="#16a34a"/>
+<Text style={styles.kpiValue}>91%</Text>
+<Text style={styles.kpiLabel}>Efficiency</Text>
 </View>
 
 </View>
 
-{/* Location Map */}
+</View>
 
-{/* <View style={styles.card}>
+{/* ⭐ Menu */}
+<View style={styles.section}>
+<Text style={styles.sectionTitle}>Account</Text>
 
-<Text style={styles.cardTitle}>Plant Location</Text>
-
-<MapView
-style={styles.map}
-initialRegion={{
-latitude: 18.5204,
-longitude: 73.8567,
-latitudeDelta: 0.01,
-longitudeDelta: 0.01
-}}
->
-
-<Marker
-coordinate={{
-latitude: 18.5204,
-longitude: 73.8567
-}}
-title="Solar Plant"
-description="Rooftop Solar Plant"
+<MenuItem
+title="Reports"
+icon="document-text-outline"
+screen="/dashboard/reports"
 />
 
-</MapView>
+<MenuItem
+title="Documents"
+icon="folder-outline"
+screen="/dashboard/documents"
+/>
 
-</View> */}
+<MenuItem
+title="Support"
+icon="call-outline"
+screen="/dashboard/support"
+/>
 
-</ScrollView>
+</View>
 
+{/* ⭐ Logout */}
+<TouchableOpacity
+style={styles.logoutBtn}
+onPress={handleLogout}
+>
+<Ionicons name="log-out-outline" size={22} color="#fff"/>
+<Text style={styles.logoutText}>Logout</Text>
+</TouchableOpacity>
+
+</Screen>
+
+);
+}
+
+function MenuItem({title,icon,screen}){
+return(
+<TouchableOpacity
+style={styles.menuItem}
+onPress={()=>router.push(screen)}
+>
+<View style={styles.menuRow}>
+<Ionicons name={icon} size={22} color="#16a34a"/>
+<Text style={styles.menuText}>{title}</Text>
+</View>
+<Ionicons name="chevron-forward" size={20} color="#9ca3af"/>
+</TouchableOpacity>
 );
 }
 
 const styles = StyleSheet.create({
 
-container:{
-flex:1,
-padding:20,
-backgroundColor:"#f6f7fb"
+header:{
+padding:25,
+borderRadius:24,
+alignItems:"center",
+marginBottom:15
 },
 
-title:{
-fontSize:24,
+name:{
+color:"#fff",
+fontSize:22,
 fontWeight:"bold",
-marginBottom:20
+marginTop:8
+},
+
+email:{
+color:"#ecfdf5"
+},
+
+badge:{
+marginTop:10,
+backgroundColor:"#dcfce7",
+paddingHorizontal:12,
+paddingVertical:4,
+borderRadius:20
+},
+
+badgeText:{
+color:"#166534",
+fontWeight:"bold"
 },
 
 section:{
+backgroundColor:"#fff",
+padding:18,
+borderRadius:18,
+marginBottom:15,
+elevation:3
+},
+
+sectionTitle:{
 fontSize:18,
 fontWeight:"bold",
 marginBottom:10
 },
 
-profileCard:{
-backgroundColor:"#fff",
-padding:20,
-borderRadius:15,
+grid:{
 flexDirection:"row",
-alignItems:"center",
-marginBottom:20,
-elevation:3
+flexWrap:"wrap",
+justifyContent:"space-between"
 },
 
-name:{
+box:{
+backgroundColor:"#f3f4f6",
+width:"48%",
+padding:14,
+borderRadius:12,
+marginTop:10
+},
+
+label:{
+color:"#6b7280"
+},
+
+value:{
+fontWeight:"bold",
+fontSize:16
+},
+
+kpiRow:{
+flexDirection:"row",
+justifyContent:"space-between",
+marginTop:10
+},
+
+kpiCard:{
+backgroundColor:"#f3f4f6",
+width:"30%",
+padding:14,
+borderRadius:14,
+alignItems:"center"
+},
+
+kpiValue:{
 fontSize:18,
 fontWeight:"bold"
 },
 
-role:{
+kpiLabel:{
 color:"#6b7280"
 },
 
-info:{
-fontSize:13,
-color:"#6b7280"
-},
-
-grid:{
+menuItem:{
 flexDirection:"row",
-justifyContent:"space-between",
-marginBottom:20
-},
-
-plantCard:{
-width:"48%",
-backgroundColor:"#fff",
-padding:15,
-borderRadius:15,
 alignItems:"center",
-elevation:3
-},
-
-plantName:{
-fontWeight:"bold",
-marginTop:5
-},
-
-plantMeta:{
-fontSize:12,
-color:"#6b7280"
-},
-
-card:{
+justifyContent:"space-between",
 backgroundColor:"#fff",
 padding:16,
-borderRadius:15,
-marginBottom:18,
-elevation:3
+borderRadius:14,
+marginTop:10,
+elevation:2
 },
 
-cardTitle:{
-fontWeight:"bold",
-fontSize:16,
-marginBottom:12
-},
-
-row:{
+menuRow:{
 flexDirection:"row",
 alignItems:"center",
-marginBottom:8
+gap:10
 },
 
-rowText:{
-marginLeft:8
+menuText:{
+fontWeight:"600"
 },
 
-map:{
-height:180,
-borderRadius:12
+logoutBtn:{
+flexDirection:"row",
+backgroundColor:"#ef4444",
+padding:16,
+borderRadius:14,
+justifyContent:"center",
+alignItems:"center",
+marginTop:10,
+marginBottom:40,
+gap:6
+},
+
+logoutText:{
+color:"#fff",
+fontWeight:"bold"
 }
 
 });

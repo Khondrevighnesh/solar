@@ -8,6 +8,8 @@ ScrollView
 
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
+import Screen from "../../components/Screen";
+
 
 import * as DocumentPicker from "expo-document-picker";
 import * as Sharing from "expo-sharing";
@@ -58,7 +60,7 @@ await Sharing.shareAsync(uri);
 
 };
 
-const deleteReport = (index)=>{
+const deleteReport = ({index}: {index: number})=>{
 
 const updated=[...reports];
 updated.splice(index,1);
@@ -67,7 +69,7 @@ setReports(updated);
 };
 
 return(
-
+<Screen>
 <View style={styles.container}>
 
 <Text style={styles.title}>Solar Reports</Text>
@@ -167,7 +169,7 @@ onPress={uploadReport}
 </TouchableOpacity>
 
 </View>
-
+</Screen>
 )
 
 }

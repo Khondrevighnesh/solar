@@ -1,37 +1,24 @@
-import React, { createContext, useState, ReactNode } from "react";
+import { createContext, useState } from "react";
 
-interface User {
-  name: string
-  email: string
-}
+export const AuthContext = createContext();
 
-interface AuthContextType {
-  user: User | null
-  login: (email: string, password: string) => void
-  logout: () => void
-}
+export const AuthProvider = ({ children }) => {
 
-export const AuthContext = createContext<AuthContextType | null>(null)
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
-
-  const [user, setUser] = useState<User | null>(null)
-
-  const login = (email: string) => {
-
-    setUser({
-      name: "Solar User",
-      email,
-    })
-  }
+  const login = () => {
+    console.log("LOGIN SUCCESS");
+    setIsLoggedIn(true);
+  };
 
   const logout = () => {
-    setUser(null)
-  }
+    console.log("LOGOUT SUCCESS");
+    setIsLoggedIn(false);
+  };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
       {children}
     </AuthContext.Provider>
-  )
-}
+  );
+};

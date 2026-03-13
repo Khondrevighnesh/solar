@@ -9,6 +9,8 @@ Alert
 
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
+import Screen from "../../components/Screen";
+
 
 import * as DocumentPicker from "expo-document-picker";
 import * as Sharing from "expo-sharing";
@@ -74,6 +76,7 @@ setDocuments(updated);
 
 return(
 
+<Screen>
 <View style={styles.container}>
 
 <Text style={styles.title}>Plant Documents</Text>
@@ -163,6 +166,7 @@ onPress={pickDocument}
 </TouchableOpacity>
 
 </View>
+</Screen>
 
 )
 

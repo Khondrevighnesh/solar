@@ -11,6 +11,7 @@ TouchableOpacity
 import { LineChart, BarChart, PieChart } from "react-native-chart-kit";
 import { Picker } from "@react-native-picker/picker";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import Screen from "../../components/Screen";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -32,90 +33,47 @@ data:[120,140,130,160]
 },
 
 yearly:{
-labels:["Jan","Feb","Mar","Apr","May","Jun"],
-data:[420,520,610,580,690,720]
+labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+data:[420,520,610,580,690,720,750,730,680,640,600,560]
 }
 
 };
 
 const monthlyBarData = {
 labels:["Jan","Feb","Mar","Apr","May","Jun"],
-datasets:[
-{ data:[420,520,610,580,690,720] }
-]
+datasets:[{ data:[420,520,610,580,690,720] }]
 };
 
 const lossData = [
-
-{
-name:"Shading",
-population:3,
-color:"#f59e0b",
-legendFontColor:"#333",
-legendFontSize:12
-},
-
-{
-name:"Temperature",
-population:4,
-color:"#ef4444",
-legendFontColor:"#333",
-legendFontSize:12
-},
-
-{
-name:"Inverter",
-population:2,
-color:"#3b82f6",
-legendFontColor:"#333",
-legendFontSize:12
-},
-
-{
-name:"Cable",
-population:1,
-color:"#10b981",
-legendFontColor:"#333",
-legendFontSize:12
-}
-
+{ name:"Shading", population:3, color:"#f59e0b", legendFontColor:"#333", legendFontSize:12 },
+{ name:"Temperature", population:4, color:"#ef4444", legendFontColor:"#333", legendFontSize:12 },
+{ name:"Inverter", population:2, color:"#3b82f6", legendFontColor:"#333", legendFontSize:12 },
+{ name:"Cable", population:1, color:"#10b981", legendFontColor:"#333", legendFontSize:12 }
 ];
 
 const currentData = chartData[filter];
 
 return (
-
-<ScrollView style={styles.container}>
+<Screen>
 
 {/* Header */}
-
 <View style={styles.header}>
 <Text style={styles.headerTitle}>Solar Analytics</Text>
 <Text style={styles.headerSub}>Monitor your solar performance</Text>
 </View>
 
 {/* Plant Selector */}
-
 <View style={styles.card}>
 <Text style={styles.cardTitle}>Select Plant</Text>
-
-<Picker
-selectedValue={plant}
-onValueChange={(itemValue)=>setPlant(itemValue)}
->
-
+<Picker selectedValue={plant} onValueChange={(v)=>setPlant(v)}>
 <Picker.Item label="Plant 1 - Rooftop" value="Plant 1"/>
 <Picker.Item label="Plant 2 - Factory" value="Plant 2"/>
 <Picker.Item label="Plant 3 - Farm" value="Plant 3"/>
-
 </Picker>
-
 </View>
 
-{/* Energy Stats */}
-
+{/* Stats */}
 <View style={styles.statsRow}>
-
 <View style={styles.statCard}>
 <Ionicons name="flash" size={22} color="#16a34a"/>
 <Text style={styles.statValue}>620</Text>
@@ -133,102 +91,93 @@ onValueChange={(itemValue)=>setPlant(itemValue)}
 <Text style={styles.statValue}>32</Text>
 <Text style={styles.statLabel}>Peak</Text>
 </View>
-
 </View>
 
 {/* Filter */}
-
 <View style={styles.filterRow}>
-
+{["weekly","monthly","yearly"].map(item=>(
 <TouchableOpacity
-style={[styles.filterBtn,filter==="weekly" && styles.activeFilter]}
-onPress={()=>setFilter("weekly")}
+key={item}
+style={[styles.filterBtn,filter===item && styles.activeFilter]}
+onPress={()=>setFilter(item)}
 >
-<Text style={filter==="weekly" ? styles.activeText : styles.filterText}>
-Weekly
+<Text style={filter===item ? styles.activeText : styles.filterText}>
+{item.toUpperCase()}
 </Text>
 </TouchableOpacity>
-
-<TouchableOpacity
-style={[styles.filterBtn,filter==="monthly" && styles.activeFilter]}
-onPress={()=>setFilter("monthly")}
->
-<Text style={filter==="monthly" ? styles.activeText : styles.filterText}>
-Monthly
-</Text>
-</TouchableOpacity>
-
-<TouchableOpacity
-style={[styles.filterBtn,filter==="yearly" && styles.activeFilter]}
-onPress={()=>setFilter("yearly")}
->
-<Text style={filter==="yearly" ? styles.activeText : styles.filterText}>
-Yearly
-</Text>
-</TouchableOpacity>
-
+))}
 </View>
 
-{/* Production Line Chart */}
+{/* ⭐ Production Line Graph */}
+<View style={styles.chartCardModern}>
 
-<View style={styles.chartCard}>
+<View style={styles.chartHeader}>
 <Text style={styles.cardTitle}>Energy Production</Text>
+<Ionicons name="trending-up" size={20} color="#16a34a"/>
+</View>
 
+<ScrollView horizontal showsHorizontalScrollIndicator={false}>
 <LineChart
 data={{
 labels:currentData.labels,
-datasets:[{data:currentData.data}]
+datasets:[{ data:currentData.data, strokeWidth:3 }]
 }}
-width={screenWidth - 40}
-height={220}
+width={filter==="yearly" ? screenWidth*1.6 : screenWidth-60}
+height={260}
 chartConfig={chartConfig}
 bezier
-style={styles.chart}
+style={{borderRadius:16}}
 />
+</ScrollView>
 
 </View>
 
-{/* Monthly Bar Chart */}
+{/* ⭐ Monthly Bar Graph */}
+<View style={styles.chartCardModern}>
 
-<View style={styles.chartCard}>
-
+<View style={styles.chartHeader}>
 <Text style={styles.cardTitle}>Monthly Generation</Text>
+<Ionicons name="bar-chart" size={20} color="#16a34a"/>
+</View>
 
+<ScrollView horizontal showsHorizontalScrollIndicator={false}>
 <BarChart
 data={monthlyBarData}
-width={screenWidth - 40}
-height={220}
+width={screenWidth*1.4}
+height={260}
 chartConfig={chartConfig}
-style={styles.chart}
-verticalLabelRotation={30}
+verticalLabelRotation={25}
+style={{borderRadius:16}}
 />
+</ScrollView>
 
 </View>
 
-{/* Loss Pie Chart */}
+{/* ⭐ Pie Chart */}
+<View style={styles.chartCardModern}>
 
-<View style={styles.chartCard}>
-
+<View style={styles.chartHeader}>
 <Text style={styles.cardTitle}>System Loss Analysis</Text>
+<Ionicons name="pie-chart" size={20} color="#16a34a"/>
+</View>
 
 <PieChart
 data={lossData}
-width={screenWidth - 40}
-height={220}
+width={screenWidth-40}
+height={240}
 chartConfig={chartConfig}
 accessor={"population"}
 backgroundColor={"transparent"}
 paddingLeft={"10"}
+absolute
 />
 
 </View>
 
 {/* Weather */}
-
 <Text style={styles.sectionTitle}>Weather Conditions</Text>
 
 <View style={styles.weatherRow}>
-
 <View style={styles.weatherCard}>
 <MaterialCommunityIcons name="thermometer" size={24} color="#16a34a"/>
 <Text style={styles.weatherValue}>32°C</Text>
@@ -246,31 +195,9 @@ paddingLeft={"10"}
 <Text style={styles.weatherValue}>5.4</Text>
 <Text>Irradiance</Text>
 </View>
-
 </View>
 
-{/* Performance */}
-
-<View style={styles.card}>
-
-<Text style={styles.cardTitle}>Performance</Text>
-
-<Text>Efficiency</Text>
-
-<View style={styles.progressBar}>
-<View style={[styles.progressFill,{width:"92%"}]}/>
-</View>
-
-<Text>Performance Ratio</Text>
-
-<View style={styles.progressBar}>
-<View style={[styles.progressFill,{width:"86%"}]}/>
-</View>
-
-</View>
-
-</ScrollView>
-
+</Screen>
 );
 }
 
@@ -279,33 +206,22 @@ backgroundGradientFrom:"#fff",
 backgroundGradientTo:"#fff",
 decimalPlaces:0,
 color:(opacity=1)=>`rgba(22,163,74,${opacity})`,
-labelColor:()=>"#555"
+labelColor:()=>"#6b7280",
+propsForDots:{ r:"5", strokeWidth:"2", stroke:"#16a34a" },
+propsForBackgroundLines:{ stroke:"#e5e7eb", strokeDasharray:"4" }
 };
 
 const styles = StyleSheet.create({
 
-container:{
-flex:1,
-padding:20,
-backgroundColor:"#f6f7fb"
-},
-
 header:{
 backgroundColor:"#16a34a",
 padding:20,
-borderRadius:15,
+borderRadius:20,
 marginBottom:20
 },
 
-headerTitle:{
-color:"#fff",
-fontSize:22,
-fontWeight:"bold"
-},
-
-headerSub:{
-color:"#e5e7eb"
-},
+headerTitle:{ color:"#fff", fontSize:22, fontWeight:"bold" },
+headerSub:{ color:"#e5e7eb" },
 
 statsRow:{
 flexDirection:"row",
@@ -316,21 +232,14 @@ marginBottom:20
 statCard:{
 backgroundColor:"#fff",
 padding:15,
-borderRadius:12,
+borderRadius:14,
 width:"30%",
 alignItems:"center",
 elevation:3
 },
 
-statValue:{
-fontSize:20,
-fontWeight:"bold",
-marginTop:5
-},
-
-statLabel:{
-color:"#6b7280"
-},
+statValue:{ fontSize:20, fontWeight:"bold", marginTop:5 },
+statLabel:{ color:"#6b7280" },
 
 filterRow:{
 flexDirection:"row",
@@ -345,28 +254,37 @@ borderRadius:20,
 backgroundColor:"#e5e7eb"
 },
 
-activeFilter:{
-backgroundColor:"#16a34a"
-},
+activeFilter:{ backgroundColor:"#16a34a" },
+filterText:{ color:"#333" },
+activeText:{ color:"#fff" },
 
-filterText:{
-color:"#333"
-},
-
-activeText:{
-color:"#fff"
-},
-
-chartCard:{
+chartCardModern:{
 backgroundColor:"#fff",
-padding:10,
-borderRadius:15,
+padding:18,
+borderRadius:20,
 marginBottom:20,
+elevation:4
+},
+
+chartHeader:{
+flexDirection:"row",
+justifyContent:"space-between",
+alignItems:"center",
+marginBottom:8
+},
+
+card:{
+backgroundColor:"#fff",
+padding:16,
+borderRadius:15,
+marginBottom:18,
 elevation:3
 },
 
-chart:{
-borderRadius:10
+cardTitle:{
+fontWeight:"bold",
+fontSize:16,
+marginBottom:10
 },
 
 sectionTitle:{
@@ -394,33 +312,6 @@ weatherValue:{
 fontWeight:"bold",
 fontSize:18,
 marginTop:5
-},
-
-card:{
-backgroundColor:"#fff",
-padding:16,
-borderRadius:15,
-marginBottom:18,
-elevation:3
-},
-
-cardTitle:{
-fontWeight:"bold",
-fontSize:16,
-marginBottom:10
-},
-
-progressBar:{
-height:8,
-backgroundColor:"#e5e7eb",
-borderRadius:10,
-marginVertical:8
-},
-
-progressFill:{
-height:8,
-backgroundColor:"#16a34a",
-borderRadius:10
 }
 
 });

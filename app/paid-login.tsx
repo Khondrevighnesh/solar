@@ -9,11 +9,14 @@ ScrollView,
 Platform
 } from "react-native";
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { AuthContext } from "../context/AuthContext";
 
 export default function PaidLogin(){
+
+const { login } = useContext(AuthContext);
 
 const [email,setEmail] = useState("");
 const [password,setPassword] = useState("");
@@ -25,7 +28,10 @@ const demoEmail = "client@solar.com";
 const demoPassword = "solar123";
 
 if(email === demoEmail && password === demoPassword){
-router.replace("/dashboard");
+
+login();                       // ⭐ Save Login State
+router.replace("/dashboard");  // ⭐ Open Paid App
+
 }else{
 alert("Invalid email or password");
 }
@@ -53,9 +59,7 @@ keyboardShouldPersistTaps="handled"
 <Text style={styles.title}>Client Login</Text>
 
 <View style={styles.inputBox}>
-
 <Ionicons name="mail-outline" size={20} color="#6b7280"/>
-
 <TextInput
 placeholder="Email"
 style={styles.input}
@@ -63,13 +67,10 @@ value={email}
 onChangeText={setEmail}
 autoCapitalize="none"
 />
-
 </View>
 
 <View style={styles.inputBox}>
-
 <Ionicons name="lock-closed-outline" size={20} color="#6b7280"/>
-
 <TextInput
 placeholder="Password"
 secureTextEntry={!showPassword}
@@ -78,29 +79,18 @@ value={password}
 onChangeText={setPassword}
 />
 
-<TouchableOpacity
-onPress={()=>setShowPassword(!showPassword)}
->
-
+<TouchableOpacity onPress={()=>setShowPassword(!showPassword)}>
 <Ionicons
 name={showPassword ? "eye-off" : "eye"}
 size={20}
 color="#6b7280"
 />
-
 </TouchableOpacity>
-
 </View>
 
-<TouchableOpacity
-style={styles.button}
-onPress={handleLogin}
->
-
+<TouchableOpacity style={styles.button} onPress={handleLogin}>
 <Ionicons name="log-in-outline" size={20} color="#fff"/>
-
 <Text style={styles.buttonText}>Login</Text>
-
 </TouchableOpacity>
 
 <Text style={styles.demo}>
@@ -129,7 +119,7 @@ padding:20
 },
 
 logo:{
-fontSize:28,
+fontSize:30,
 fontWeight:"bold",
 textAlign:"center",
 marginBottom:20,
@@ -140,7 +130,7 @@ card:{
 backgroundColor:"#fff",
 padding:25,
 borderRadius:18,
-elevation:4
+elevation:5
 },
 
 title:{

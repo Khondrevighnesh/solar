@@ -1,34 +1,44 @@
 import { useState } from "react";
-import { View, Text, StyleSheet, ScrollView, Dimensions, TouchableOpacity } from "react-native";
+import {
+View,
+Text,
+StyleSheet,
+Dimensions,
+TouchableOpacity,
+ScrollView
+} from "react-native";
+
 import { Picker } from "@react-native-picker/picker";
 import { Ionicons } from "@expo/vector-icons";
 import { LineChart } from "react-native-chart-kit";
+import Screen from "../../components/Screen";
+
 
 const screenWidth = Dimensions.get("window").width;
 
-export default function Dashboard() {
+export default function Dashboard(){
 
 const plants = [
-  {
-    id:"1",
-    name:"Home Solar",
-    capacity:"5 kW",
-    location:"Pune",
-    generation:24,
-    power:3.2,
-    efficiency:91,
-    savings:3200
-  },
-  {
-    id:"2",
-    name:"Factory Solar",
-    capacity:"50 kW",
-    location:"Mumbai",
-    generation:210,
-    power:18.6,
-    efficiency:93,
-    savings:28000
-  }
+{
+id:"1",
+name:"Home Solar",
+capacity:"5 kW",
+location:"Pune",
+generation:24,
+power:3.2,
+efficiency:91,
+savings:3200
+},
+{
+id:"2",
+name:"Factory Solar",
+capacity:"50 kW",
+location:"Mumbai",
+generation:210,
+power:18.6,
+efficiency:93,
+savings:28000
+}
 ];
 
 const [selectedPlant,setSelectedPlant] = useState(plants[0]);
@@ -57,14 +67,15 @@ const currentData = chartDataSets[chartFilter];
 
 return(
 
-<ScrollView style={styles.container}>
+<Screen>
 
-<Text style={styles.title}>Solar Dashboard</Text>
-
+<View style={styles.header}>
+<Text style={styles.headerTitle}>Solar Dashboard </Text>
+<Text style={styles.headerSub}>Monitor your solar performance</Text>
+</View>
 {/* Plant Selector */}
 
 <View style={styles.dropdown}>
-
 <Picker
 selectedValue={selectedPlant.id}
 onValueChange={(value)=>{
@@ -72,7 +83,6 @@ const plant = plants.find(p=>p.id===value);
 setSelectedPlant(plant);
 }}
 >
-
 {plants.map((plant)=>(
 <Picker.Item
 key={plant.id}
@@ -80,46 +90,43 @@ label={`${plant.name} (${plant.capacity})`}
 value={plant.id}
 />
 ))}
-
 </Picker>
-
 </View>
 
-{/* Metrics */}
+{/* KPI CARDS */}
 
 <View style={styles.grid}>
 
 <View style={styles.card}>
-<Ionicons name="flash" size={24} color="#16a34a"/>
+<Ionicons name="flash" size={26} color="#16a34a"/>
 <Text style={styles.metric}>{selectedPlant.generation}</Text>
 <Text style={styles.label}>kWh Today</Text>
 </View>
 
 <View style={styles.card}>
-<Ionicons name="speedometer" size={24} color="#16a34a"/>
+<Ionicons name="speedometer" size={26} color="#16a34a"/>
 <Text style={styles.metric}>{selectedPlant.power} kW</Text>
 <Text style={styles.label}>Live Power</Text>
 </View>
 
 <View style={styles.card}>
-<Ionicons name="analytics" size={24} color="#16a34a"/>
+<Ionicons name="analytics" size={26} color="#16a34a"/>
 <Text style={styles.metric}>{selectedPlant.efficiency}%</Text>
 <Text style={styles.label}>Efficiency</Text>
 </View>
 
 <View style={styles.card}>
-<Ionicons name="cash" size={24} color="#16a34a"/>
+<Ionicons name="cash" size={26} color="#16a34a"/>
 <Text style={styles.metric}>₹{selectedPlant.savings}</Text>
 <Text style={styles.label}>Savings</Text>
 </View>
 
 </View>
 
-{/* Weather Section */}
+{/* WEATHER */}
 
 <View style={styles.weatherCard}>
-
-<Text style={styles.sectionTitle}>Weather Conditions</Text>
+<Text style={styles.sectionTitle}>Weather</Text>
 
 <View style={styles.weatherRow}>
 <Text>🌡 Temperature</Text>
@@ -138,83 +145,100 @@ value={plant.id}
 
 </View>
 
-{/* Chart Filters */}
+{/* SEGMENT FILTER */}
 
-<View style={styles.filterRow}>
+<View style={styles.segmentContainer}>
 
+{["weekly","monthly","yearly"].map((item)=>(
 <TouchableOpacity
-style={[styles.filterBtn,chartFilter==="weekly" && styles.activeFilter]}
-onPress={()=>setChartFilter("weekly")}
+key={item}
+style={[
+styles.segmentBtn,
+chartFilter===item && styles.segmentActive
+]}
+onPress={()=>setChartFilter(item)}
 >
-<Text>Weekly</Text>
-</TouchableOpacity>
-
-<TouchableOpacity
-style={[styles.filterBtn,chartFilter==="monthly" && styles.activeFilter]}
-onPress={()=>setChartFilter("monthly")}
+<Text
+style={[
+styles.segmentText,
+chartFilter===item && styles.segmentTextActive
+]}
 >
-<Text>Monthly</Text>
+{item.toUpperCase()}
+</Text>
 </TouchableOpacity>
-
-<TouchableOpacity
-style={[styles.filterBtn,chartFilter==="yearly" && styles.activeFilter]}
-onPress={()=>setChartFilter("yearly")}
->
-<Text>Yearly</Text>
-</TouchableOpacity>
+))}
 
 </View>
 
-{/* Chart */}
+{/* GRAPH */}
 
-<View style={styles.chartCard}>
+<View style={styles.chartWrapper}>
 
-<Text style={styles.sectionTitle}>Energy Production</Text>
+<View style={styles.chartHeader}>
+<Text style={styles.chartTitle}>Energy Production</Text>
+<Ionicons name="trending-up" size={22} color="#16a34a"/>
+</View>
+
+<ScrollView horizontal showsHorizontalScrollIndicator={false}>
 
 <LineChart
 data={{
 labels:currentData.labels,
-datasets:[{data:currentData.data}]
+datasets:[{data:currentData.data,strokeWidth:3}]
 }}
-width={screenWidth-40}
-height={220}
+width={
+chartFilter==="yearly"
+? screenWidth*1.6
+: screenWidth-60
+}
+height={260}
 chartConfig={{
-backgroundGradientFrom:"#fff",
-backgroundGradientTo:"#fff",
+backgroundGradientFrom:"#ffffff",
+backgroundGradientTo:"#ffffff",
 decimalPlaces:0,
 color:(opacity=1)=>`rgba(22,163,74,${opacity})`,
-labelColor:()=>"#555"
+labelColor:()=>"#6b7280",
+propsForDots:{
+r:"5",
+strokeWidth:"2",
+stroke:"#16a34a"
+},
+propsForBackgroundLines:{
+stroke:"#e5e7eb",
+strokeDasharray:"4"
+}
 }}
 bezier
-style={{borderRadius:10}}
+style={{borderRadius:16,marginVertical:8}}
 />
+
+</ScrollView>
 
 </View>
 
-</ScrollView>
+</Screen>
 
 );
 }
 
 const styles = StyleSheet.create({
 
-container:{
-flex:1,
-backgroundColor:"#f6f7fb",
-padding:20
+header:{
+backgroundColor:"#16a34a",
+padding:20,
+borderRadius:20,
+marginBottom:20
 },
 
-title:{
-fontSize:26,
-fontWeight:"bold",
-marginBottom:10
-},
+headerTitle:{ color:"#fff", fontSize:22, fontWeight:"bold" },
+headerSub:{ color:"#e5e7eb" },
 
 dropdown:{
 backgroundColor:"#fff",
-borderRadius:12,
+borderRadius:16,
 marginBottom:20,
-elevation:2
+elevation:3
 },
 
 grid:{
@@ -226,30 +250,30 @@ justifyContent:"space-between"
 card:{
 backgroundColor:"#fff",
 width:"48%",
-padding:18,
-borderRadius:12,
+padding:20,
+borderRadius:18,
 alignItems:"center",
-marginBottom:14,
-elevation:2
+marginBottom:15,
+elevation:3
 },
 
 metric:{
-fontSize:20,
+fontSize:22,
 fontWeight:"bold",
 marginTop:6
 },
 
 label:{
-fontSize:12,
-color:"#666"
+fontSize:13,
+color:"#6b7280"
 },
 
 weatherCard:{
 backgroundColor:"#fff",
 padding:18,
-borderRadius:12,
+borderRadius:18,
 marginTop:10,
-elevation:2
+elevation:3
 },
 
 weatherRow:{
@@ -259,33 +283,56 @@ marginBottom:8
 },
 
 sectionTitle:{
-fontSize:16,
+fontSize:18,
 fontWeight:"bold",
 marginBottom:10
 },
 
-filterRow:{
+segmentContainer:{
 flexDirection:"row",
-justifyContent:"space-around",
-marginTop:20
+backgroundColor:"#e5e7eb",
+borderRadius:14,
+padding:4,
+marginTop:25
 },
 
-filterBtn:{
-padding:10,
-borderRadius:8,
-backgroundColor:"#eee"
+segmentBtn:{
+flex:1,
+paddingVertical:10,
+borderRadius:12,
+alignItems:"center"
 },
 
-activeFilter:{
-backgroundColor:"#bbf7d0"
+segmentActive:{
+backgroundColor:"#16a34a"
 },
 
-chartCard:{
+segmentText:{
+fontWeight:"600",
+color:"#374151"
+},
+
+segmentTextActive:{
+color:"#fff"
+},
+
+chartWrapper:{
+marginTop:20,
 backgroundColor:"#fff",
 padding:18,
-borderRadius:12,
-marginTop:10,
-elevation:2
+borderRadius:20,
+elevation:4
+},
+
+chartHeader:{
+flexDirection:"row",
+justifyContent:"space-between",
+alignItems:"center"
+},
+
+chartTitle:{
+fontSize:18,
+fontWeight:"bold"
 }
 
 });
